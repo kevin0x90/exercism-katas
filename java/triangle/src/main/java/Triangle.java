@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.function.DoublePredicate;
 import java.util.stream.DoubleStream;
 
 class Triangle {
@@ -11,8 +10,8 @@ class Triangle {
                 .sorted()
                 .toArray();
 
-        if (anySideIsInvalid()) {
-            throw new TriangleException("all sides must be > 0");
+        if (!sidesHavePositiveLength()) {
+            throw new TriangleException("all sides must be positive");
         }
 
         if (!hasTriangleInequality()) {
@@ -21,7 +20,7 @@ class Triangle {
     }
 
     boolean isEquilateral() {
-        return getNumberOfDistinctSides() == 1L;
+        return sidesInAscendingOrder[0] == sidesInAscendingOrder[2];
     }
 
     boolean isIsosceles() {
@@ -42,12 +41,7 @@ class Triangle {
         return sidesInAscendingOrder[2] <= (sidesInAscendingOrder[1] + sidesInAscendingOrder[0]);
     }
 
-    private boolean anySideIsInvalid() {
-        return Arrays.stream(sidesInAscendingOrder)
-                .anyMatch(isSmallerOrEqualTo(0d));
-    }
-
-    private DoublePredicate isSmallerOrEqualTo(final double compareValue) {
-        return side -> side <= compareValue;
+    private boolean sidesHavePositiveLength() {
+        return sidesInAscendingOrder[0] > 0;
     }
 }
