@@ -42,6 +42,6 @@ class Triangle {
     }
 
     private boolean sidesHavePositiveLength() {
-        return sidesInAscendingOrder[0] > 0;
+        return sidesInAscendingOrder[0] > 0d;
     }
 }
