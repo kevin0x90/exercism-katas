@@ -1,22 +1,18 @@
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+import java.util.Arrays;
+import java.util.function.DoublePredicate;
 import java.util.stream.DoubleStream;
 
 class Triangle {
 
-    private final Map<Double, List<Double>> groupedSides;
+    private final double[] sidesInAscendingOrder;
 
     Triangle(final double side1, final double side2, final double side3) throws TriangleException {
-        groupedSides = DoubleStream.of(side1, side2, side3)
-                .boxed()
-                .collect(Collectors.groupingBy(Function.identity()));
+        sidesInAscendingOrder = DoubleStream.of(side1, side2, side3)
+                .sorted()
+                .toArray();
 
-        if (allSidesAreZero()) {
-            throw new TriangleException("side1, side2 and side3 must not be 0");
+        if (anySideIsInvalid()) {
+            throw new TriangleException("all sides must be > 0");
         }
 
         if (!hasTriangleInequality()) {
@@ -24,30 +20,34 @@ class Triangle {
         }
     }
 
-    private boolean hasTriangleInequality() {
-        final var sidesDescending = groupedSides.values()
-                .stream()
-                .flatMap(Collection::stream)
-                .sorted(Comparator.reverseOrder())
-                .collect(Collectors.toList());
-
-        return sidesDescending.get(0) <= sidesDescending.get(1) + sidesDescending.get(2);
-    }
-
-    private boolean allSidesAreZero() {
-        return isEquilateral() && groupedSides.containsKey(0d);
-    }
-
     boolean isEquilateral() {
-        return groupedSides.size() == 1;
+        return getNumberOfDistinctSides() == 1L;
     }
 
     boolean isIsosceles() {
-        return isEquilateral() || groupedSides.size() == 2;
+        return getNumberOfDistinctSides() <= 2L;
     }
 
     boolean isScalene() {
         return !isIsosceles();
     }
 
+    private long getNumberOfDistinctSides() {
+        return Arrays.stream(sidesInAscendingOrder)
+                .distinct()
+                .count();
+    }
+
+    private boolean hasTriangleInequality() {
+        return sidesInAscendingOrder[2] <= (sidesInAscendingOrder[1] + sidesInAscendingOrder[0]);
+    }
+
+    private boolean anySideIsInvalid() {
+        return Arrays.stream(sidesInAscendingOrder)
+                .anyMatch(isSmallerOrEqualTo(0d));
+    }
+
+    private DoublePredicate isSmallerOrEqualTo(final double compareValue) {
+        return side -> side <= compareValue;
+    }
 }
