@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.stream.DoubleStream;
 
 class Triangle {
@@ -24,17 +23,12 @@ class Triangle {
     }
 
     boolean isIsosceles() {
-        return getNumberOfDistinctSides() <= 2L;
+        return sidesInAscendingOrder[0] == sidesInAscendingOrder[1] ||
+                sidesInAscendingOrder[1] == sidesInAscendingOrder[2];
     }
 
     boolean isScalene() {
         return !isIsosceles();
-    }
-
-    private long getNumberOfDistinctSides() {
-        return Arrays.stream(sidesInAscendingOrder)
-                .distinct()
-                .count();
     }
 
     private boolean hasTriangleInequality() {
