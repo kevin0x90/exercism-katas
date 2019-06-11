@@ -6,18 +6,15 @@ import circle.OuterCircle;
 import java.util.List;
 
 class Darts {
-    private final double x;
-    private final double y;
+    private final double distanceFromCenter;
+    private static final List<Circle> dartCircles = List.of(new OuterCircle(), new MiddleCircle(), new InnerCircle());
 
     Darts(final double x, final double y) {
-        this.x = x;
-        this.y = y;
+        distanceFromCenter = Math.sqrt(x * x + y * y);
     }
 
     int score() {
-        final double distanceFromCenter = Math.sqrt(x * x + y * y);
-
-        return List.of(new OuterCircle(), new MiddleCircle(), new InnerCircle())
+        return dartCircles
                 .stream()
                 .filter(circle -> circle.isWithinCircle(distanceFromCenter))
                 .findFirst()
