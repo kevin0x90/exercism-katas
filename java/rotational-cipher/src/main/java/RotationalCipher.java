@@ -1,7 +1,7 @@
 import java.util.Optional;
 
 class RotationalCipher {
-    private final static int CHARACTERS_IN_ALPHABET = 26;
+    private final static int NUM_OF_CHARACTERS_IN_ALPHABET = 26;
     private final int shiftKey;
 
     RotationalCipher(final int shiftKey) {
@@ -36,10 +36,10 @@ class RotationalCipher {
     }
 
     private static boolean isInAlphabetRange(final int characterRangeIndex) {
-        return characterRangeIndex >= 0 && characterRangeIndex < CHARACTERS_IN_ALPHABET;
+        return characterRangeIndex >= 0 && characterRangeIndex < NUM_OF_CHARACTERS_IN_ALPHABET;
     }
 
     private int getShiftedIndex(final int currentIndex) {
-        return (currentIndex + this.shiftKey) % CHARACTERS_IN_ALPHABET;
+        return (currentIndex + this.shiftKey) % NUM_OF_CHARACTERS_IN_ALPHABET;
     }
 }
