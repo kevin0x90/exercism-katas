@@ -1,25 +1,23 @@
+import kotlin.math.abs
+
 class Triangle {
-    private val a: Double
-    private val b: Double
-    private val c: Double
+    private val numberOfDistinctSides: Int
 
     constructor(a: Int, b: Int, c: Int) : this(a.toDouble(), b.toDouble(), c.toDouble())
 
     constructor(a: Double, b: Double, c: Double) {
-        require(a != 0.0 && b != 0.0 && c != 0.0) { "a, b and c must not be 0" }
-        require(a + b > c && a + c > b && b + c > a) { "triangle inequality not fulfilled" }
+        require(a >= 0.0 && b >= 0.0 && c >= 0.0) { "a, b and c must not be 0" }
+        require(abs(a - b) < c && c < a + b) { "triangle inequality not fulfilled" }
 
-        this.a = a
-        this.b = b
-        this.c = c
+        numberOfDistinctSides = listOf(a, b, c).distinct().size
     }
 
     val isEquilateral: Boolean
-        get() = a == b && b == c
+        get() = numberOfDistinctSides == 1
 
     val isIsosceles: Boolean
-        get() = a == b || a == c || b == c
+        get() = numberOfDistinctSides < 3
 
     val isScalene: Boolean
-        get() = a != b && a != c && b != c
+        get() = numberOfDistinctSides == 3
 }
