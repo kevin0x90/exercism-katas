@@ -5,11 +5,8 @@ class Hamming {
             throw new ArithmeticException("strand lengths must be equal");
         }
 
-        if (strand1.isEmpty()) {
-            return 0
-        }
-
-        (0..(strand1.size() - 1))
-                .inject(0) { diffCount, index -> diffCount + (strand1[index] == strand2[index] ? 0 : 1) }
+        [strand1.toList(), strand2.toList()]
+                .transpose()
+                .sum(0) { subList -> subList[0] == subList[1] ? 0 : 1 }
     }
 }
