@@ -5,8 +5,8 @@ class Hamming {
             throw new ArithmeticException("strand lengths must be equal");
         }
 
-        [strand1.toList(), strand2.toList()]
+        [strand1, strand2]*.toList()
                 .transpose()
-                .sum(0) { subList -> subList[0] == subList[1] ? 0 : 1 }
+                .count { firstChar, secondChar -> firstChar != secondChar }
     }
 }
