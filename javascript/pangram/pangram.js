@@ -1,19 +1,7 @@
-function getAlphabetSet() {
-  const alphabet = new Set();
-
-  for (let i = 'a'.charCodeAt(0); i < 'z'.charCodeAt(0); ++i) {
-    alphabet.add(String.fromCharCode(i));
-  }
-
-  return alphabet;
-}
+const ALPHABET = Array.from({ length: 26 }, (_, i) => 'a'.charCodeAt(0) + i)
+  .reduce((alphabetSet, currentCharCode) => alphabetSet.add(String.fromCharCode(currentCharCode)), new Set());
 
 export const isPangram = (sentence) => {
-  const alphabet = getAlphabetSet();
-
-  for (let i = 0; i < sentence.length; ++i) {
-    alphabet.delete(sentence[i].toLowerCase());
-  }
-
-  return alphabet.size === 0;
+  const normalizedSentence = sentence.toLowerCase();
+  return Array.from(ALPHABET).every(char => normalizedSentence.includes(char));
 };
