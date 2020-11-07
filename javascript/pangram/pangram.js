@@ -1,5 +1,4 @@
-const ALPHABET = Array.from({ length: 26 }, (_, i) => 'a'.charCodeAt(0) + i)
-  .reduce((alphabetSet, currentCharCode) => alphabetSet.add(String.fromCharCode(currentCharCode)), new Set());
+const ALPHABET = [...'abcdefghijklmnopqrstuvwxyz'];
 
 export const isPangram = (sentence) => {
   const normalizedSentence = sentence.toLowerCase();
