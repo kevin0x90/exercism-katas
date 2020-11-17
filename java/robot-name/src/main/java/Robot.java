@@ -18,7 +18,6 @@ class Robot {
     }
 
     public void reset() {
-        GENERATED_NAMES.remove(name);
         generateName();
     }
 
@@ -36,10 +35,9 @@ class Robot {
             }
 
             generatedName = result.toString();
-        } while (GENERATED_NAMES.contains(generatedName));
+        } while (!GENERATED_NAMES.add(generatedName));
 
         name = generatedName;
-        GENERATED_NAMES.add(name);
     }
 
     private char generateChar() {
