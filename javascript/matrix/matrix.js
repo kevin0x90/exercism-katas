@@ -1,17 +1,11 @@
 function parseRows(rowStrings) {
-  return rowStrings.reduce((result, row) => {
-    result.push(row.split(' ').map(elem => parseInt(elem, 10)))
-    return result
-  }, [])
+  return rowStrings.map(row => row.split(' ').map(elem => parseInt(elem, 10)))
 }
 
 function generateColumns(maxNumberOfColumns, rows) {
   const columns = []
   for (let i = 0; i < maxNumberOfColumns; ++i) {
-    columns.push([])
-    for (let k = 0; k < rows.length; ++k) {
-      columns[i].push(rows[k][i])
-    }
+    columns[i] = rows.map(row => row[i])
   }
 
   return columns
