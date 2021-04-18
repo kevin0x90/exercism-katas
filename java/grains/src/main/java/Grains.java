@@ -26,5 +26,4 @@ class Grains {
     BigInteger grainsOnBoard() {
         return TOTAL_GRAINS;
     }
-
 }
